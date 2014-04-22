@@ -1,0 +1,40 @@
+{
+    "name": "akeneo/delta-export-bundle",
+    "type": "symfony-bundle",
+    "description": "Akeneo PIM bundle to export delta products",
+    "keywords": ["pim", "akeneo", "e-commerce", "connector"],
+    "homepage": "http://akeneo.com",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name":     "Julien Sanchez",
+            "email":    "julien@akeneo.com",
+            "homepage": "http://www.akeneo.com/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/akeneo/pim-community-dev.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/akeneo/platform.git"
+        }
+    ],
+    "require": {
+        "akeneo/pim-community-dev": "1.1.*@stable"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev",
+        "henrikbjorn/phpspec-code-coverage" : "1.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Pim\\Bundle\\DeltaExportBundle\\": "" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Pim/Bundle/DeltaExportBundle"
+}

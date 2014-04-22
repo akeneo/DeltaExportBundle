@@ -1,0 +1,2 @@
+parameters:
+    pim_delta_export.entity.product_export.class: Pim\Bundle\DeltaExportBundle\Entity\ProductExport

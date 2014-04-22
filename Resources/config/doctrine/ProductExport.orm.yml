@@ -1,0 +1,31 @@
+Pim\Bundle\DeltaExportBundle\Entity\ProductExport:
+    type: entity
+    table: pim_delta_product_export
+    indexes:
+        searchcode_idx:
+            columns:
+                - id
+    repositoryClass: Pim\Bundle\DeltaExportBundle\Entity\Repository\ProductExportRepository
+    uniqueConstraints:
+        searchunique_idx:
+            columns:
+                - id
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        date:
+            type: datetime
+    manyToOne:
+        product:
+            targetEntity: Pim\Bundle\CatalogBundle\Model\Product
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+        jobInstance:
+            targetEntity: Akeneo\Bundle\BatchBundle\Entity\JobInstance
+            joinColumns:
+                job_instance_id:
+                    referencedColumnName: id

@@ -1,0 +1,10 @@
+parameters:
+     pim_delta_export.manager.product_export.class: Pim\Bundle\DeltaExportBundle\Manager\ProductExportManager
+
+services:
+    pim_delta_export.manager.product_export:
+        class: %pim_delta_export.manager.product_export.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %pim_delta_export.entity.product_export.class%
+            - %pim_catalog.entity.product.class%
