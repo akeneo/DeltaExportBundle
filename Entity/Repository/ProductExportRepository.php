@@ -16,7 +16,12 @@ use Akeneo\Bundle\BatchBundle\Entity\JobInstance;
 class ProductExportRepository extends EntityRepository
 {
     /**
+     * Find all productExport for product and jobInstance
+     * @param AbstractProduct $product
+     * @param JobInstance     $jobInstance
+     * @param DateTime        $lastUpdate
      *
+     * @return array(1)
      */
     public function findProductExportAfterEdit(AbstractProduct $product, JobInstance $jobInstance, \DateTime $lastUpdate)
     {

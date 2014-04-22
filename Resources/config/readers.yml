@@ -7,3 +7,8 @@ services:
         parent: pim_base_connector.reader.doctrine.product
         arguments:
             - @pim_delta_export.manager.product_export
+    pim_delta_export.reader.doctrine.product_value:
+        class: %pim_delta_export.reader.doctrine.product.class%
+        parent: pim_base_connector.reader.doctrine.product
+        arguments:
+            - @pim_delta_export.manager.product_value_export

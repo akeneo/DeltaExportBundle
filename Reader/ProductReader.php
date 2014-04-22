@@ -24,6 +24,8 @@ class ProductReader extends PimProductReader
     protected $productExportManager;
 
     /**
+     * Constructor
+     *
      * @param ProductRepositoryInterface $repository
      * @param ChannelManager             $channelManager
      * @param CompletenessManager        $completenessManager
@@ -56,6 +58,12 @@ class ProductReader extends PimProductReader
         return $product;
     }
 
+    /**
+     * Filter products and return only products that got updated since the last export
+     * @param AbstractProduct $readProduct
+     *
+     * @return AbstractProduct|null
+     */
     protected function filterProduct(AbstractProduct $readProduct = null)
     {
         if (null !== $readProduct) {
@@ -71,6 +79,10 @@ class ProductReader extends PimProductReader
         return null;
     }
 
+    /**
+     * Update the product export date (will be removed later)
+     * @param AbstractProduct $product
+     */
     protected function updateProductExport(AbstractProduct $product)
     {
         $this->productExportManager->updateProductExport($product->getIdentifier(), $this->jobInstance);

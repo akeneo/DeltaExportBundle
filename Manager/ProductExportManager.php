@@ -18,7 +18,10 @@ use Pim\Bundle\CatalogBundle\Repository\ReferableEntityRepositoryInterface;
  */
 class ProductExportManager
 {
-    const MAX_FLUSH_COUNT = 500;
+    /**
+     * @var boolean
+     */
+    protected $productValueDelta;
 
     /**
      * @var EntityManager
@@ -46,25 +49,38 @@ class ProductExportManager
      *
      * @param EntityManager $entityManager      Entity manager for other entitites
      * @param string        $productExportClass ProductExport class
+     * @param string        $productClass       Product class
+     * @param boolean       $productValueDelta  Should we do a delta on product values
      */
     public function __construct(
         EntityManager $entityManager,
         $productExportClass,
-        $productClass
+        $productClass,
+        $productValueDelta = false
     ) {
         $this->entityManager           = $entityManager;
         $this->productExportClass      = $productExportClass;
         $this->productExportRepository = $this->entityManager->getRepository($this->productExportClass);
         $this->productRepository       = $this->entityManager->getRepository($productClass);
+        $this->productValueDelta       = $productValueDelta;
     }
-
-    public function updateProductExports($productIdentifiers, JobInstance $jobInstance)
+    /**
+     * Update product export dates for the given products
+     * @param array       $products
+     * @param JobInstance $jobInstance
+     */
+    public function updateProductExports($products, JobInstance $jobInstance)
     {
-        foreach ($productIdentifiers as $productIdentifier) {
-            $this->updateProductExport($productIdentifier, $jobInstance);
+        foreach ($products as $product) {
+            $this->updateProductExport($product->getIdentifier(), $jobInstance);
         }
     }
 
+    /**
+     * Update product export date for the given product
+     * @param string      $identifier
+     * @param JobInstance $jobInstance
+     */
     public function updateProductExport($identifier, JobInstance $jobInstance)
     {
         $now = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -107,7 +123,14 @@ class ProductExportManager
         }
     }
 
-    public function filterProducts($products, $jobInstance)
+    /**
+     * Filter products to export
+     * @param array       $products
+     * @param JobInstance $jobInstance
+     *
+     * @return AbstractProduct
+     */
+    public function filterProducts($products, JobInstance $jobInstance)
     {
         $productsToExport = array();
 
@@ -122,9 +145,15 @@ class ProductExportManager
         return $productsToExport;
     }
 
+    /**
+     * Filter a product (return null if the product got exported after his last edit)
+     * @param AbstractProduct $product
+     * @param JobInstance     $jobInstance
+     *
+     * @return AbstractProduct|null
+     */
     public function filterProduct(AbstractProduct $product, JobInstance $jobInstance)
     {
-
         $productExport = $this->productExportRepository->findProductExportAfterEdit(
             $product,
             $jobInstance,
@@ -132,7 +161,9 @@ class ProductExportManager
         );
 
         if (0 === count($productExport)) {
-            $product = $this->filterProductValues($product);
+            if ($this->productValueDelta) {
+                $product = $this->filterProductValues($product);
+            }
         } else {
             $product = null;
         }
@@ -140,11 +171,19 @@ class ProductExportManager
         return $product;
     }
 
+    /**
+     * Filter on product values
+     *
+     * @param AbstractProduct $product
+     *
+     * @return AbstractProduct
+     */
     public function filterProductValues(AbstractProduct $product)
     {
         $this->entityManager->detach($product);
         $productValues  = $product->getValues();
         $identifierType = $product->getIdentifier()->getAttribute()->getAttributeType();
+
         foreach ($productValues as $productValue) {
             if ($identifierType != $productValue->getAttribute()->getAttributeType() && (
                     null == $productValue->getUpdated() || (
@@ -154,7 +193,6 @@ class ProductExportManager
                 )
             ) {
                 $product->removeValue($productValue);
-            } elseif ($productValue->getUpdated()) {
             }
         }
 

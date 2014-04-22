@@ -8,3 +8,8 @@ services:
             - @doctrine.orm.entity_manager
             - %pim_delta_export.entity.product_export.class%
             - %pim_catalog.entity.product.class%
+
+    pim_delta_export.manager.product_value_export:
+        parent: @pim_delta_export.manager.product_export
+        arguments:
+            - true

@@ -44,6 +44,7 @@ class ProductExport
      * Set date
      *
      * @param \DateTime $date
+     *
      * @return ProductExport
      */
     public function setDate($date)
@@ -67,6 +68,7 @@ class ProductExport
      * Set product
      *
      * @param \Pim\Bundle\CatalogBundle\Model\Product $product
+     *
      * @return ProductExport
      */
     public function setProduct(\Pim\Bundle\CatalogBundle\Model\Product $product = null)
@@ -90,6 +92,7 @@ class ProductExport
      * Set jobInstance
      *
      * @param \Akeneo\Bundle\BatchBundle\Entity\JobInstance $jobInstance
+     *
      * @return ProductExport
      */
     public function setJobInstance(\Akeneo\Bundle\BatchBundle\Entity\JobInstance $jobInstance = null)
