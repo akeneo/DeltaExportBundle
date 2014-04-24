@@ -51,10 +51,6 @@ class ProductReader extends PimProductReader
     {
         $product = $this->filterProduct(parent::read());
 
-        if (null !== $product) {
-            $this->updateProductExport($product);
-        }
-
         return $product;
     }
 
