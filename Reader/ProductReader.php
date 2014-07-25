@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\DeltaExportBundle\Reader;
 
-use Pim\Bundle\BaseConnectorBundle\Reader\Doctrine\ProductReader as PimProductReader;
+use Pim\Bundle\BaseConnectorBundle\Reader\Doctrine\ObsoleteProductReader as PimProductReader;
 use Pim\Bundle\DeltaExportBundle\Manager\ProductExportManager;
 use Pim\Bundle\BaseConnectorBundle\Reader\Doctrine\Reader;
 use Akeneo\Bundle\BatchBundle\Entity\StepExecution;

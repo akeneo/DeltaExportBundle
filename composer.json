@@ -22,6 +22,9 @@
             "url": "https://github.com/akeneo/platform.git"
         }
     ],
+    "require": {
+        "akeneo/pim-community-dev": "1.2.x-dev"
+    },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev",
         "henrikbjorn/phpspec-code-coverage" : "1.0.*@dev"
