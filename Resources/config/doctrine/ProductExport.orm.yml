@@ -24,8 +24,10 @@ Pim\Bundle\DeltaExportBundle\Entity\ProductExport:
             joinColumns:
                 product_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
         jobInstance:
             targetEntity: Akeneo\Bundle\BatchBundle\Entity\JobInstance
             joinColumns:
                 job_instance_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
