@@ -20,12 +20,14 @@ Pim\Bundle\DeltaExportBundle\Entity\ProductExport:
             type: datetime
     manyToOne:
         product:
-            targetEntity: Pim\Bundle\CatalogBundle\Model\Product
+            targetEntity: Pim\Bundle\CatalogBundle\Model\ProductInterface
             joinColumns:
                 product_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
         jobInstance:
             targetEntity: Akeneo\Bundle\BatchBundle\Entity\JobInstance
             joinColumns:
                 job_instance_id:
                     referencedColumnName: id
+                    onDelete: CASCADE
